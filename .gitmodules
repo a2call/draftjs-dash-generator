@@ -1,0 +1,3 @@
+[submodule "vendor/draft-js"]
+	path = vendor/draft-js
+	url = https://github.com/facebook/draft-js.git

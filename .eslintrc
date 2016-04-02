@@ -1,0 +1,8 @@
+extends: 
+  - eslint-config-remko
+  - eslint-config-remko/es6
+  - eslint-config-remko/react
+env:
+  node: true
+rules:
+  no-console: 0

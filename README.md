@@ -1,0 +1,29 @@
+# [draftjs-dash-generator: Generate a Dash docset for Draft.js](https://el-tramo.be/draftjs-dash-generator)
+
+Generates a [Dash](http://kapeli.com/dash) docset of [Draft.js](https://facebook.github.io/draft-js/).
+
+If you are just interested in installing the docset (and not in building it yourself), just
+[click here to install the docset](https://el-tramo.be/dash/Draft.js.html).
+This docset is bundled as a user contribution with Dash, which is updated regularly, 
+but the link above will always get you the latest version.
+
+## Installation
+
+To install the prerequisites, run
+
+		git submodule update --init
+		npm install
+
+
+## Usage
+
+To build the docset, run
+
+		npm run build
+
+This will create a `build` directory with all build results.
+
+Use the resulting docset by adding the `.docset` to the *Docsets* tab of Dash.
+
+The build command also generates a Dash feed in `feed`. The `.html` file in the `feed` dir contains the Dash URL,
+which will install the docset when it is opened.
