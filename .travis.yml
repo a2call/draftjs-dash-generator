@@ -3,23 +3,32 @@ node_js:
   - '5'
 env:
   - CXX=g++-4.8
-script:
-  - npm run build
-  - node_modules/.bin/eslint .
-after_success:
-  - cd build/user-contribution && zip -r ../../user-contribution.zip . && cd ../..
 addons:
   apt:
     sources:
       - ubuntu-toolchain-r-test
     packages:
       - g++-4.8
+script:
+  - npm run build
+  - node_modules/.bin/eslint .
+before_deploy:
+  - openssl aes-256-cbc -K $encrypted_1edbd3b4c4c2_key -iv $encrypted_1edbd3b4c4c2_iv -in .travis/deploy-key.pem.enc -out .travis/deploy-key.pem -d
+  - cd build/user-contribution && zip -r ../../user-contribution.zip . && cd ../..
+  - cd build && zip -r ../Draft.js.docset.zip Draft.js.docset && cd ..
 deploy:
+  - provider: script
+    skip_cleanup: true
+    script: .travis/update-feed.sh
+    on:
+      repo: remko/draftjs-dash-generator
   - provider: releases
     skip_cleanup: true
     api_key:
       secure: pKmWZULtlmc4qtLfhHIsHsNP9Gbr47IaK8VEiWF8Bh+aem5+cF3D/OcbG8GBtRtsacdAY8v9XADWkr92qMqEudIYYPOTd/VxLqF2cr/gRjJtk/jRo835faRJFoyw8fnY8BTkDzHDxMXLjum+Tfqu+e/ehlvumK1EZiPc3yDgsiMx2C0awfygmuR3GyjzotQBSoolJi33icg9kzli4a3WPEqfZ5W7hN8/QlV65AYRU0TW5ZR1kv0MrJG8m0cL/qI+1mjIGqVTktAxPpiJbaU0dur/e8COUDxvQ10ooZ3RrKqJ2rWy7+KvkuF8dxxF7NHogQnbm6xUwXU4gS8G/ye69zGJ/1CzuSi9VhXQlG9YJ4oNPqePMn2wGNS2EbwQ1XyIX9qFR18lbj7MmhJ+baUK+04y1PyNojJKkEf1vxcLgiKWml+ffv28PNdIkyXSUwf0F43e8fzThigfIfowzZxkk+uEJznyhcNXEyQJcTyeaOTv1bpXAU5mMnClR/38/SbPL5Nq1Z7jFfihQpAYkKmQTu2+aqO7w8wOflGqPqqqp0Xam4ZMAp1MBFCPpyOfAnANBlumXaUz6VmjlnwFSey9sBP+hGC84s5xdP8u2+CrkvmSQCPpqz0yCUOt7QV+VLlSO5Pya0ONrVqjc+b0ksrWl9BTgpIiQ94kxgZYeCg6cjM=
-    file: user-contribution.zip
+    file: 
+      - user-contribution.zip
+      - Draft.js.docset.zip
     on:
       repo: remko/draftjs-dash-generator
       tags: true

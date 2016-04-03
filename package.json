@@ -38,7 +38,7 @@
   "config": {
     "name": "Draft.js",
     "id": "draft-js",
-    "feedBaseURL": "http://cdn.el-tramo.be/dash",
+    "feedBaseURL": "https://el-tramo.be/dash",
     "ghooks": {
       "pre-commit": "./node_modules/.bin/eslint ."
     }
