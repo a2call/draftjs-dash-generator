@@ -12,7 +12,6 @@ import { createRawAnchor } from './Anchor';
 import * as DashBuilder from './DashBuilder';
 
 const packageInfo = require('./package.json');
-const config = packageInfo.config;
 const version = require('./vendor/draft-js/package.json').version;
 
 // Sort by chain
@@ -36,13 +35,13 @@ function fixLinks(html) {
 }
 
 DashBuilder.build({
-	name: config.name,
-	id: config.id,
+	name: "Draft.js",
+	id: "draftjs",
 	version: version,
 	icon: path.join(__dirname, 'icon.png'),
 	icon2x: path.join(__dirname, 'icon@2x.png'),
 	style: path.join(__dirname, 'vendor/draft-js/website/src/draft-js/css/draft.css'),
-	feedBaseURL: config.feedBaseURL,
+	feedBaseURL: "https://el-tramo.be/dash",
 	author: packageInfo.author,
 	documentation: (function () {
 		const entries = [];
