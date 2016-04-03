@@ -8,7 +8,9 @@ export default ({title, children}) => {
 				<link rel='stylesheet' type='text/css' href='style.css'/>
 			</head>
 			<body>
-				{children}
+				<section className='skinnyWrap documentationContent'>
+					{children}
+				</section>
 			</body>
 		</html>
 	);
