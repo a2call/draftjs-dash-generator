@@ -1,7 +1,7 @@
 #!/bin/bash
 
 GITHUB_RELEASE_REPO=remko/draftjs-dash-generator
-GITHUB_DASH_DOCSET=Draft.js
+GITHUB_DASH_DOCSET=DraftJS
 GITHUB_DASH_BRANCH=draft-js
 GITHUB_DASH_REPO=remko/Dash-User-Contributions
 

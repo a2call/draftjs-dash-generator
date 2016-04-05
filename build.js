@@ -14,6 +14,15 @@ import * as DashBuilder from './DashBuilder';
 const packageInfo = require('./package.json');
 const version = require('./vendor/draft-js/package.json').version;
 
+const modules = [
+	'Modifier',
+	'RichUtils',
+	'Entity'
+];
+const ignoreEntries = [
+	'Data Conversion'
+];
+
 // Sort by chain
 function sort(pages) {
 	const sortedPages = [];
@@ -114,12 +123,14 @@ DashBuilder.build({
 					}
 
 					html = <Class name={name} content={contentWithAnchors}/>;
-					entries.push({
-						name: name,
-						id: marked.meta.id,
-						type: 'Class',
-						anchor: ''
-					});
+					if (!includes(ignoreEntries, name)) {
+						entries.push({
+							name: name,
+							id: marked.meta.id,
+							type: includes(modules, name) ? 'Module' : 'Class',
+							anchor: ''
+						});
+					}
 				}
 			}
 			else {
