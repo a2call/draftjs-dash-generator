@@ -17,10 +17,15 @@ const version = require('./vendor/draft-js/package.json').version;
 const modules = [
 	'Modifier',
 	'RichUtils',
+	'AtomicBlockUtils',
+	'KeyBindingUtil',
 	'Entity'
 ];
 const ignoreEntries = [
 	'Data Conversion'
+];
+const enums = [
+	'EditorChangeType'
 ];
 
 // Sort by chain
@@ -86,6 +91,35 @@ DashBuilder.build({
 						name: name,
 						id: marked.meta.id,
 						type: 'Component',
+						anchor: ''
+					});
+				}
+				else if (includes(enums, marked.meta.title)) {
+					const name = marked.meta.title;
+					let contentWithAnchors = content;
+
+					// Detect methods & propertise
+					const sectionRegExp = /^#### `(.*)`/gm;
+					let match;
+					while ((match = sectionRegExp.exec(markdown)) !== null) {
+						const enumValue = match[1];
+						const anchor = `-${toLower(enumValue)}`;
+						contentWithAnchors = contentWithAnchors.replace(
+							new RegExp(`(<h4 id="${anchor}")`, 'g'),
+							createRawAnchor({name: enumValue, type: "Value"}) + "$1");
+						entries.push({
+							name: `${name}.${enumValue}`,
+							id: marked.meta.id,
+							type: "Value",
+							anchor: anchor
+						});
+					}
+
+					html = <Class name={name} content={contentWithAnchors}/>;
+					entries.push({
+						name: name,
+						id: marked.meta.id,
+						type: 'Enum',
 						anchor: ''
 					});
 				}
