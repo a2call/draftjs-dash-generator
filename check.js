@@ -59,8 +59,10 @@ function check(docset, { ignore } = {}) {
 							errors.push({file: pageFilePath, message: "Missing anchor: " + link});
 						}
 					}
-					else if (startsWith(link, "http") && !isIgnored(link, ignore)) {
-						warnings.push({file: pageFilePath, message: "External link: " + link});
+					else if (startsWith(link, "http")) {
+						if (!isIgnored(link, ignore)) {
+							warnings.push({file: pageFilePath, message: "External link: " + link});
+						}
 					}
 					else {
 						checkInternalLink(link, path.dirname(page.file), pageFilePath, pages, ignore, errors, warnings);
@@ -81,7 +83,7 @@ function check(docset, { ignore } = {}) {
 		});
 }
 
-check('./build/Draft.js.docset', { ignore: /advanced-undo-redo/ })
+check('./build/Draft.js.docset', { ignore: /advanced-undo-redo|immutable-js|tree\/master|blob\/master|flowtype\.org|es-shims\/|issues\/|mozilla\.org|reactjs\.com|facebook\.com|khan\.github\.io/ })
 	.then(({errors, warnings}) => {
 		forEach(warnings, warning => {
 			console.log(chalk.yellow('Warning: ') + path.basename(warning.file) + ": " + warning.message);
